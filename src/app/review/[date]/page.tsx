@@ -11,7 +11,7 @@ interface Assignment {
   Assigned: string | null;
 }
 
-export default function ReviewPage({ params }: { params: { date: string } }) {
+export default function Page({ params }: { params: { date: string } }) {
   const { date } = params;
   const router = useRouter();
 
