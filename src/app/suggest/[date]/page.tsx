@@ -33,10 +33,12 @@ export default function SuggestedPage({
   useEffect(() => {
     const fetchData = async () => {
       const agendaRes = await fetch(
-        `https://tm-api.fly.dev/agenda/${selectedDate}`
+        `${process.env.NEXT_PUBLIC_API_URL}/agenda/${selectedDate}`
       );
 
-      const membersRes = await fetch(`https://tm-api.fly.dev/members`);
+      const membersRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/members`
+      );
 
       const agendaData = await agendaRes.json();
       const membersData = await membersRes.json();
@@ -72,7 +74,7 @@ export default function SuggestedPage({
 
     if (newValue === prevValue) return;
 
-    let updated = [...agenda];
+    const updated = [...agenda];
 
     const existingIndex = updated.findIndex(
       (item, i) => item.Primary === newValue && i !== idx
@@ -103,11 +105,14 @@ export default function SuggestedPage({
     const savingToast = toast.loading("Saving assignments...");
 
     try {
-      const res = await fetch("https://tm-api.fly.dev/assignments/bulk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/assignments/bulk`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (res.ok) {
         toast.success("✅ Assignments saved!", { id: savingToast });
@@ -115,6 +120,7 @@ export default function SuggestedPage({
         toast.error("❌ Error saving assignments.", { id: savingToast });
       }
     } catch (err) {
+      console.error(err);
       toast.error("❌ Network error.", { id: savingToast });
     }
   };

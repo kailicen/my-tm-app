@@ -18,7 +18,9 @@ export default function MembersPage() {
   useEffect(() => {
     const fetchProgress = async () => {
       try {
-        const res = await fetch("https://tm-api.fly.dev/members/progress");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/members/progress`
+        );
         const data = await res.json();
 
         if (res.ok && data.report.length > 0) {
@@ -27,6 +29,7 @@ export default function MembersPage() {
           toast.error("No member progress found.");
         }
       } catch (err) {
+        console.error(err);
         toast.error("Failed to load member progress.");
       } finally {
         setLoading(false);

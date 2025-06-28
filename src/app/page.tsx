@@ -11,13 +11,16 @@ export default function Home() {
   useEffect(() => {
     const fetchSavedDates = async () => {
       try {
-        const res = await fetch("https://tm-api.fly.dev/assignments/dates");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/assignments/dates`
+        );
         if (!res.ok) throw new Error("Failed to fetch dates");
 
         const data = await res.json();
         const dates = data.dates || [];
         setSavedDates(dates);
       } catch (err) {
+        console.error(err);
         toast.error("Failed to load saved assignments.");
       }
     };

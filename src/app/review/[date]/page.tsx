@@ -22,7 +22,7 @@ export default function ReviewPage({ params }: { params: { date: string } }) {
     const fetchAssignments = async () => {
       try {
         const res = await fetch(
-          `https://tm-api.fly.dev/assignments?meeting_date=${date}`
+          `${process.env.NEXT_PUBLIC_API_URL}/assignments?meeting_date=${date}`
         );
         const data = await res.json();
 
@@ -33,6 +33,7 @@ export default function ReviewPage({ params }: { params: { date: string } }) {
           router.replace(`/suggest/${date}`);
         }
       } catch (err) {
+        console.error(err);
         toast.error("❌ Failed to load assignments.");
         router.replace(`/suggest/${date}`);
       } finally {
