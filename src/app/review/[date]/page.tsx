@@ -10,8 +10,11 @@ interface Assignment {
   Role: string;
   Assigned: string | null;
 }
+interface ReviewPageProps {
+  params: { date: string };
+}
 
-export default function ReviewPage({ params }: { params: { date: string } }) {
+export default function ReviewPage({ params }: ReviewPageProps) {
   const { date } = params;
   const router = useRouter();
 
