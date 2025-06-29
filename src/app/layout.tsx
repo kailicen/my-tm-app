@@ -47,7 +47,7 @@ export default function RootLayout({
         </nav>
 
         {/* Page Content */}
-        <main className="w-full max-w-screen-lg mx-auto px-0 pt-3 pb-20 min-h-[calc(100vh-56px)]">
+        <main className="w-full max-w-screen-lg mx-auto px-1 pt-3 pb-20 min-h-[calc(100vh-56px)]">
           {children}
           <Toaster position="top-right" />
         </main>
@@ -95,7 +95,9 @@ function NavItem({
     <Link
       href={href}
       className={`flex ${
-        mobile ? "flex-col py-2" : "items-center gap-2 py-3"
+        mobile
+          ? "flex-col items-center justify-center py-2"
+          : "items-center gap-2 py-3"
       } text-zinc-300 hover:text-rose-500`}
     >
       {icon}
