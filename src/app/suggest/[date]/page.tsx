@@ -202,8 +202,41 @@ export default function SuggestedPage({
                       handleAssignmentChange(idx, option ? option.value : "")
                     }
                     options={members.map((m) => ({ value: m, label: m }))}
-                    isClearable
-                    className="text-black"
+                    isClearable={false} // ✅ hides the cross
+                    menuPlacement="auto" // ✅ helps mobile dropdown placement
+                    className="w-full"
+                    styles={{
+                      control: (provided) => ({
+                        ...provided,
+                        backgroundColor: "#27272a", // bg-zinc-800
+                        borderColor: "#3f3f46", // border-zinc-700
+                        color: "#f4f4f5", // text-zinc-100
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        backgroundColor: "#27272a", // dropdown bg
+                        color: "#f4f4f5", // dropdown text
+                      }),
+                      singleValue: (provided) => ({
+                        ...provided,
+                        color: "#f4f4f5",
+                      }),
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isFocused
+                          ? "#52525b"
+                          : "#27272a", // hover vs default
+                        color: "#f4f4f5",
+                      }),
+                      input: (provided) => ({
+                        ...provided,
+                        color: "#f4f4f5",
+                      }),
+                      placeholder: (provided) => ({
+                        ...provided,
+                        color: "#a1a1aa", // placeholder text color
+                      }),
+                    }}
                   />
                 </td>
                 <td className="px-2 py-1 text-zinc-400">
