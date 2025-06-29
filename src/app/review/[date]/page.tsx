@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Edit3 } from "lucide-react";
@@ -11,8 +11,12 @@ interface Assignment {
   Assigned: string | null;
 }
 
-export default function ReviewPage({ params }: { params: { date: string } }) {
-  const { date } = params;
+export default function ReviewPage({
+  params,
+}: {
+  params: Promise<{ date: string }>;
+}) {
+  const { date: date } = use(params); // ✅ New required unwrapping
   const router = useRouter();
 
   const [assignments, setAssignments] = useState<Assignment[]>([]);
@@ -27,14 +31,18 @@ export default function ReviewPage({ params }: { params: { date: string } }) {
         const data = await res.json();
 
         if (res.ok && data.data.length > 0) {
-          setAssignments(data.data);
+          const mappedAssignments = data.data.map((item: any) => ({
+            Role: item.role,
+            Assigned: item.assigned,
+          }));
+          setAssignments(mappedAssignments);
         } else {
           toast.error(`No saved assignments for ${date}`);
           router.replace(`/suggest/${date}`);
         }
       } catch (err) {
         console.error(err);
-        toast.error("❌ Failed to load assignments.");
+        toast.error("Failed to load assignments.");
         router.replace(`/suggest/${date}`);
       } finally {
         setLoading(false);

@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { RotateCcw, Save } from "lucide-react";
 import Select from "react-select";
@@ -19,10 +19,10 @@ interface AgendaItem {
 export default function SuggestedPage({
   params,
 }: {
-  params: { date: string };
+  params: Promise<{ date: string }>;
 }) {
   const router = useRouter();
-  const selectedDate = params.date;
+  const { date: selectedDate } = use(params); // ✅ New required unwrapping
 
   const [allDates, setAllDates] = useState<string[]>([]);
   const [agenda, setAgenda] = useState<AgendaItem[]>([]);
@@ -115,13 +115,13 @@ export default function SuggestedPage({
       );
 
       if (res.ok) {
-        toast.success("✅ Assignments saved!", { id: savingToast });
+        toast.success("Assignments saved!", { id: savingToast });
       } else {
-        toast.error("❌ Error saving assignments.", { id: savingToast });
+        toast.error("Error saving assignments.", { id: savingToast });
       }
     } catch (err) {
       console.error(err);
-      toast.error("❌ Network error.", { id: savingToast });
+      toast.error("Network error.", { id: savingToast });
     }
   };
 
