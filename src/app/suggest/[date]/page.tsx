@@ -166,32 +166,26 @@ export default function SuggestedPage({
         </div>
       </div>
 
-      <div className="overflow-x-auto text-sm">
+      <div className="overflow-x-auto text-xs">
         <table className="w-full border border-zinc-700 rounded-md overflow-hidden">
           <thead className="bg-zinc-800 text-zinc-300">
             <tr>
-              <th className="text-left px-2 py-1 border-b border-zinc-700">
-                Role
-              </th>
-              <th className="text-left px-2 py-1 border-b border-zinc-700">
+              <th className="text-left p-1 border-b border-zinc-700">Role</th>
+              <th className="text-left p-1 border-b border-zinc-700">
                 Original
               </th>
-              <th className="text-left px-2 py-1 border-b border-zinc-700">
+              <th className="text-left p-1 border-b border-zinc-700">
                 Assignment
               </th>
-              <th className="text-left px-2 py-1 border-b border-zinc-700">
-                Backup
-              </th>
+              <th className="text-left p-1 border-b border-zinc-700">Backup</th>
             </tr>
           </thead>
           <tbody>
             {agenda.map((item, idx) => (
               <tr key={idx} className="border-b border-zinc-800">
-                <td className="px-2 py-1 text-zinc-100">{item.Role}</td>
-                <td className="px-2 py-1 text-zinc-400">
-                  {item.Original || "—"}
-                </td>
-                <td className="px-2 py-1">
+                <td className="p-1 text-zinc-100">{item.Role}</td>
+                <td className="p-1 text-zinc-400">{item.Original || "—"}</td>
+                <td className="p-1">
                   <Select
                     value={
                       item.Primary
@@ -208,40 +202,45 @@ export default function SuggestedPage({
                     styles={{
                       control: (provided) => ({
                         ...provided,
-                        backgroundColor: "#27272a", // bg-zinc-800
-                        borderColor: "#3f3f46", // border-zinc-700
-                        color: "#f4f4f5", // text-zinc-100
+                        backgroundColor: "#27272a",
+                        borderColor: "#3f3f46",
+                        color: "#f4f4f5",
+                        minHeight: "32px", // optional: make the input box shorter
+                        fontSize: "12px", // ✅ smaller text
                       }),
                       menu: (provided) => ({
                         ...provided,
-                        backgroundColor: "#27272a", // dropdown bg
-                        color: "#f4f4f5", // dropdown text
+                        backgroundColor: "#27272a",
+                        color: "#f4f4f5",
+                        fontSize: "12px", // ✅ smaller dropdown options
                       }),
                       singleValue: (provided) => ({
                         ...provided,
                         color: "#f4f4f5",
+                        fontSize: "12px", // ✅ smaller selected text
                       }),
                       option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused
                           ? "#52525b"
-                          : "#27272a", // hover vs default
+                          : "#27272a",
                         color: "#f4f4f5",
+                        fontSize: "12px", // ✅ smaller options
                       }),
                       input: (provided) => ({
                         ...provided,
                         color: "#f4f4f5",
+                        fontSize: "12px", // ✅ smaller input text
                       }),
                       placeholder: (provided) => ({
                         ...provided,
-                        color: "#a1a1aa", // placeholder text color
+                        color: "#a1a1aa",
+                        fontSize: "12px", // ✅ smaller placeholder
                       }),
                     }}
                   />
                 </td>
-                <td className="px-2 py-1 text-zinc-400">
-                  {item.Backup || "—"}
-                </td>
+                <td className="p-1 text-zinc-400">{item.Backup || "—"}</td>
               </tr>
             ))}
           </tbody>
